@@ -1,6 +1,9 @@
 const express = require('express')
 const Joi = require('@hapi/joi')
 const { insertItem, getItems, updateQuantity } = require('../services/db')
+var {sendMailInsert} = require('../controller/mail');
+var mongo = require('../controller/Mongo');
+var auth = require('../controller/authenticate');
 
 const router = express.Router()
 
@@ -8,6 +11,8 @@ const itemSchema = Joi.object().keys({
   name: Joi.string(),
   quantity: Joi.number().integer().min(0)
 })
+
+
 
 router.post('/item', (req, res) => {
   const item = req.body
@@ -18,24 +23,18 @@ router.post('/item', (req, res) => {
     res.status(400).end()
     return
   }
-  insertItem(item)
-    .then(() => {
-      res.status(200).end()
-    })
-    .catch((err) => {
-      console.log(err)
-      res.status(500).end()
-    })
+  mongo.insertTicket(item, res);
+  //res.status(200).end();
 })
 
 router.get('/items', (req, res) => {
   getItems()
     .then((items) => {
-      items = items.map((item) => ({
-        id: item._id,
-        name: item.name,
-        quantity: item.quantity
-      }))
+      // items = items.map((item) => ({
+      //   id: item._id,
+      //   name: item.name,
+      //   quantity: item.quantity
+      // }))
       res.json(items)
     })
     .catch((err) => {
@@ -56,4 +55,7 @@ router.put('/item/:id/quantity/:quantity', (req, res) => {
     })
 })
 
+router.get('/authenticate', (req,res) => {
+auth.authenticate(req.body,res);
+})
 module.exports = router
