@@ -4,20 +4,20 @@ const { insertItem, getItems, updateQuantity } = require('../services/db')
 var {sendMailInsert} = require('../controller/mail');
 var mongo = require('../controller/Mongo');
 var auth = require('../controller/authenticate');
-
+var valid = require('../services/jsonValidation')
 const router = express.Router()
 
-const itemSchema = Joi.object().keys({
-  name: Joi.string(),
-  quantity: Joi.number().integer().min(0)
-})
+// const itemSchema = Joi.object().keys({
+//   name: Joi.string(),
+//   quantity: Joi.number().integer().min(0)
+// })
 
 
 
 router.post('/item', (req, res) => {
-  const item = req.body
-  console.log(req.body)
-  const result = itemSchema.validate(item)
+  const item = req.body;
+  //const result = itemSchema.validate(item)
+  const result = valid.insertTicket.validate(item)
   if (result.error) {
     console.log(result.error)
     res.status(400).end()
@@ -30,11 +30,6 @@ router.post('/item', (req, res) => {
 router.get('/items', (req, res) => {
   getItems()
     .then((items) => {
-      // items = items.map((item) => ({
-      //   id: item._id,
-      //   name: item.name,
-      //   quantity: item.quantity
-      // }))
       res.json(items)
     })
     .catch((err) => {
@@ -57,5 +52,15 @@ router.put('/item/:id/quantity/:quantity', (req, res) => {
 
 router.get('/authenticate', (req,res) => {
 auth.authenticate(req.body,res);
+})
+
+router.post('/updateassignecomments', (req,res) => {
+  const result = valid.assigneComments.validate(req.body);
+  if (result.error) {
+    console.log(result.error)
+    res.status(400).end()
+    return
+  }
+  mongo.updateComments(req.body, res);
 })
 module.exports = router

@@ -25,9 +25,23 @@ const updateQuantity = (id, quantity) => {
   return collection.updateOne({ _id: ObjectId(id) }, { $inc: { quantity } })
 }
 
-const getpassword = (id) =>{
+const getpassword = (id) => {
   const collection = db.collection('userDetails')
   return collection.find({NTId:id}).toArray();
 }
 
-module.exports = { init, insertItem, getItems, updateQuantity, getpassword}
+const getTicketCount = () => {
+  const collection = db.collection('ticketDetails')
+  return collection.count();
+}
+
+const updateAssigneComments = (id,comment) => {
+  const collection = db.collection('ticketDetails')
+  return collection.updateOne({NTId: id}, {$set:{Asignee_Comments: comment, Status: "In progress"}});
+}
+
+const getAssets = (id) => {
+  const collection = db.collection('assetDetails');
+  return collection.find({NTId:id}).toArray();
+}
+module.exports = { init, insertItem, getItems, updateQuantity, getpassword, getTicketCount, updateAssigneComments, getAssets}
