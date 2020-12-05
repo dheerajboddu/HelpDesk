@@ -58,6 +58,10 @@ router.get('/ticket/:ticketId', (req, res) =>{
     mongo.getTickets(req.params.ticketId, res);
 })
 
+router.get('/ticketbyid/:ticketId', (req, res) =>{
+  mongo.getTicketsUser(req.params.ticketId, res);
+})
+
 router.post('/updateassignecomments', (req,res) => {
   const result = valid.assigneComments.validate(req.body);
   if (result.error) {

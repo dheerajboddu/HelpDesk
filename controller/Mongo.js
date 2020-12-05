@@ -1,4 +1,4 @@
-const { insertItem, getTicketCount, updateAssigneComments, getticketDetailsbyId} = require('../services/db')
+const { insertItem, getTicketCount, updateAssigneComments, getticketDetailsbyId, getticketDetailsbyUser} = require('../services/db')
 var {sendMailInsert} = require('../controller/mail');
 var utilities = require('../Utilities');
 
@@ -49,6 +49,17 @@ function getTickets(id, res){
   })
 }
 
+function getTicketsUser(id, res){
+  getticketDetailsbyUser(id, res)
+  .then((items)=>{
+    res.json(items)
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(500).end();
+  })
+}
 module.exports.insertTicket = insertTicket;
 module.exports.updateComments = updateComments;
 module.exports.getTickets = getTickets;
+module.exports.getTicketsUser = getTicketsUser;
