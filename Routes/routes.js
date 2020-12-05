@@ -50,7 +50,7 @@ router.put('/item/:id/quantity/:quantity', (req, res) => {
     })
 })
 
-router.post('/authenticate/:id/:password', (req,res) => {
+router.get('/authenticate/:id/:password', (req,res) => {
 console.log(req.params);  
 auth.authenticate(req.params,res);
 })
