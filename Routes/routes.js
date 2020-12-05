@@ -50,8 +50,8 @@ router.put('/item/:id/quantity/:quantity', (req, res) => {
     })
 })
 
-router.post('/authenticate', (req,res) => {
-auth.authenticate(req.body,res);
+router.post('/authenticate/:id/:password', (req,res) => {
+auth.authenticate(req.params,res);
 })
 
 router.post('/updateassignecomments', (req,res) => {
