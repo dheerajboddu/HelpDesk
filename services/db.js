@@ -49,4 +49,10 @@ const getticketDetailsbyId = (id) =>{
   const collection = db.collection('ticketDetails')
   return collection.find({ticketId:id}).toArray();
 }
-module.exports = { init, insertItem, getItems, updateQuantity, getpassword, getTicketCount, updateAssigneComments, getAssets, getticketDetailsbyId}
+
+const getticketDetailsbyUser = (id) =>{
+  const collection = db.collection('ticketDetails')
+  return collection.find({NTId:id}).toArray();
+}
+module.exports = { init, insertItem, getItems, updateQuantity, getpassword, getTicketCount, 
+  updateAssigneComments, getAssets, getticketDetailsbyId, getticketDetailsbyUser}
