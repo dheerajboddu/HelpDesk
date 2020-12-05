@@ -50,9 +50,12 @@ router.put('/item/:id/quantity/:quantity', (req, res) => {
     })
 })
 
-router.get('/authenticate/:id/:password', (req,res) => {
-console.log(req.params);  
+router.get('/authenticate/:id/:password', (req,res) => { 
 auth.authenticate(req.params,res);
+})
+
+router.get('/ticket/:ticketId', (req, res) =>{
+    mongo.getTickets(req.params.ticketId, res);
 })
 
 router.post('/updateassignecomments', (req,res) => {
