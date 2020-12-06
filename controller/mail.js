@@ -8,12 +8,12 @@ var transporter = nodemailer.createTransport({
     }
   });
 
- const sendMailInsert= () =>{
+ const sendMailInsert= (id) =>{
   var mailOptions = {
     from: 'dheeraj7121997@gmail.com',
-    to: 'dheeraj7121997@gmail.com',
-    subject: 'Help Needed',
-    text: 'That was easy!'
+    to: 'saivineethm007@gmail.com',
+    subject: 'Ticket raised',
+    text: id + 'is waiting to get reslove'
   };
 
   transporter.sendMail(mailOptions, function(error, info){
