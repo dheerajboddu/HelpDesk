@@ -16,7 +16,7 @@ function insertTicket(ticket,res){
       ticket['ticketId']  = ticketId;
       insertItem(ticket)
     .then(() => {
-     // sendMailInsert();
+     sendMailInsert(ticketId);
       res.json({ticketId: ticketId}).end();
     })
     .catch((err) => {
